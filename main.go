@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
 	_ "github.com/lib/pq"
@@ -23,7 +24,11 @@ func main() {
 	defer conn.Close()
 
 	store := db.NewStore(conn)
-	server := api.NewServer(store)
+	fmt.Printf("Symmetric key: %s\n", config.TokenSymmetricKey)
+	server, err := api.NewServer(store, config)
+	if err != nil {
+		log.Fatal("cannot create server:", err)
+	}
 
 	err = server.Start(config.ServerAddress)
 
