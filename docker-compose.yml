@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  simple-bank:
+    image: simple-bank
+    container_name: simple-bank
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_SOURCE=postgresql://postgres:root@pgdb:5432/simple_bank?sslmode=disable
+    networks:
+      - base-network
+
+networks:
+  base-network:
+    external: true
