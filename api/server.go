@@ -49,6 +49,7 @@ func (server *Server) setupRouter() {
 
 	router.POST("/users", server.createUser)
 	router.POST("/users/login", server.loginUser)
+	router.POST("/refreshToken", server.renewToken)
 
 	authRoutes := router.Group("/").Use(authMiddleware(server.tokenMaker))
 
